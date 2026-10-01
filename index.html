@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Real Estate Manager</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--tx:#1b1f24;--mut:#667085;--ac:#2563eb;--bd:#e4e7ec;--ok:#16a34a;--bad:#dc2626;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1318;--card:#181e26;--tx:#e8ebef;--mut:#98a2b3;--ac:#60a5fa;--bd:#2a323d;--ok:#4ade80;--bad:#f87171}}
+:root[data-theme="dark"]{--bg:#0f1318;--card:#181e26;--tx:#e8ebef;--mut:#98a2b3;--ac:#60a5fa;--bd:#2a323d;--ok:#4ade80;--bad:#f87171}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:18px 16px 4px;max-width:960px;margin:auto}
+h1{font-size:20px;margin:0}h2{font-size:16px;margin:24px 0 8px}
+nav{display:flex;gap:6px;flex-wrap:wrap;max-width:960px;margin:8px auto;padding:0 16px}
+nav button{border:1px solid var(--bd);background:var(--card);color:var(--tx);padding:8px 14px;border-radius:999px;cursor:pointer;font:inherit}
+nav button.on{background:var(--ac);border-color:var(--ac);color:#fff}
+main{max-width:960px;margin:auto;padding:8px 16px 40px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.stat{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px}
+.stat small{color:var(--mut)}.stat b{display:block;font-size:22px}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px;margin-bottom:14px}
+input,select{padding:9px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font:inherit;min-width:0}
+.f button{background:var(--ac);color:#fff;border:0;border-radius:8px;padding:9px;font:inherit;cursor:pointer}
+.w{overflow-x:auto;background:var(--card);border:1px solid var(--bd);border-radius:12px}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--bd);white-space:nowrap}
+th{color:var(--mut);font-weight:600;font-size:13px}tr:last-child td{border-bottom:0}
+.x{background:none;border:1px solid var(--bd);color:var(--bad);border-radius:6px;padding:3px 9px;cursor:pointer;font:inherit}
+.ok{color:var(--ok)}.mut{color:var(--mut)}
+.bar{display:flex;align-items:center;gap:10px;margin:6px 0}.bar span{width:70px;color:var(--mut)}
+.bar i{display:block;height:14px;background:var(--ac);border-radius:4px;min-width:3px}
+.hero{overflow:hidden;background:linear-gradient(135deg,#0b3b8f,#0e7c86);color:#fff;padding:28px 16px 0}
+.hero .in{max-width:960px;margin:auto}
+.hero h1{font-size:clamp(24px,5vw,38px);line-height:1.15;margin:0 0 8px}
+.hero p{margin:0 0 14px;opacity:.9;max-width:520px}
+.hero svg{display:block;width:100%;height:auto;max-width:960px;margin:auto}
+.feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;max-width:960px;margin:14px auto 0;padding:0 16px}
+.feat div{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px}
+.feat b{display:block}.feat span{color:var(--mut);font-size:13px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.pc{background:var(--card);border:1px solid var(--bd);border-radius:14px;overflow:hidden}
+.pc .im{height:110px;display:flex;align-items:flex-end;justify-content:center;background:linear-gradient(#bfe3ff,#e8f6ff)}
+.pc .im svg{width:120px;height:93px}
+.pc .bd{padding:12px}.pc h3{margin:0;font-size:16px}
+.tag{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;border:1px solid var(--bd)}
+body{background:linear-gradient(160deg,#eaf2ff,#f4fbf6 55%,#fff1e3) fixed}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) body{background:linear-gradient(160deg,#0d1b3a,#0f2a2e 60%,#1c1530) fixed}}
+:root[data-theme="dark"] body{background:linear-gradient(160deg,#0d1b3a,#0f2a2e 60%,#1c1530) fixed}
+nav button{border-color:var(--c);color:var(--c);font-weight:600}
+nav button.on{background:var(--c);border-color:var(--c);color:#fff}
+nav button:nth-child(1){--c:#2563eb}nav button:nth-child(2){--c:#ea580c}nav button:nth-child(3){--c:#9333ea}nav button:nth-child(4){--c:#16a34a}
+.feat div:nth-child(1),.grid .stat:nth-child(1){--c:#2563eb}.feat div:nth-child(2),.grid .stat:nth-child(2){--c:#9333ea}.feat div:nth-child(3),.grid .stat:nth-child(3){--c:#ea580c}.grid .stat:nth-child(4){--c:#16a34a}
+.feat div,.grid .stat{border-top:4px solid var(--c);background:color-mix(in srgb,var(--c) 9%,var(--card))}
+.feat b,.stat b{color:var(--c)}
+.tag.ok{background:#16a34a22;border-color:#16a34a;color:var(--ok)}
+.tag.vac{background:#f59e0b22;border-color:#f59e0b;color:#d97706}
+.t-Apartment{background:#2f6fed22;border-color:#2f6fed;color:#2f6fed}
+.t-House{background:#e4572e22;border-color:#e4572e;color:#e4572e}
+.t-Commercial{background:#9333ea22;border-color:#9333ea;color:#9333ea}
+.t-Land{background:#0e7c8622;border-color:#0e7c86;color:#0e7c86}
+</style></head><body>
+<section class="hero"><div class="in"><h1>🏠 Smart property management,<br>made simple.</h1><p>Properties, tenants and rent — all in one place.</p></div>
+<svg viewBox="0 0 960 140" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
+<defs><pattern id="w" width="16" height="20" patternUnits="userSpaceOnUse"><rect x="4" y="5" width="8" height="10" rx="1" fill="#ffd96b" opacity=".9"/></pattern></defs>
+<circle cx="860" cy="38" r="22" fill="#ffd96b" opacity=".9"/>
+<g fill="#fff" opacity=".25"><rect x="30" y="60" width="70" height="80"/><rect x="250" y="40" width="60" height="100"/><rect x="560" y="55" width="80" height="85"/><rect x="800" y="70" width="70" height="70"/></g>
+<g fill="#0a2a6b"><rect x="110" y="25" width="90" height="115"/><rect x="210" y="70" width="70" height="70"/><rect x="330" y="45" width="80" height="95"/><rect x="430" y="80" width="60" height="60"/><rect x="500" y="30" width="90" height="110"/></g>
+<g fill="url(#w)"><rect x="110" y="25" width="90" height="115"/><rect x="210" y="70" width="70" height="70"/><rect x="330" y="45" width="80" height="95"/><rect x="430" y="80" width="60" height="60"/><rect x="500" y="30" width="90" height="110"/></g>
+<polygon points="640,95 705,55 770,95" fill="#e4572e"/><rect x="655" y="95" width="100" height="45" fill="#fff"/><rect x="695" y="110" width="20" height="30" fill="#0e7c86"/><rect x="668" y="105" width="14" height="14" fill="#9ad1ff"/><rect x="728" y="105" width="14" height="14" fill="#9ad1ff"/>
+<g fill="#2bb673"><circle cx="85" cy="118" r="16"/><circle cx="612" cy="118" r="14"/><circle cx="800" cy="116" r="16"/><circle cx="900" cy="118" r="14"/></g>
+<rect y="136" width="960" height="4" fill="#0a2a6b"/></svg></section>
+<div class="feat"><div><b>🏢 Track every property</b><span>See what is vacant and what is earning.</span></div><div><b>👥 Know your tenants</b><span>Leases and contacts, always at hand.</span></div><div><b>💰 Never miss rent</b><span>Record payments and watch your income grow.</span></div></div>
+<nav>
+<button data-t="Dashboard">Dashboard</button><button data-t="Properties">Properties</button>
+<button data-t="Tenants">Tenants</button><button data-t="Payments">Payments</button>
+</nav>
+<main id="v"></main>
+<script>
+let db={props:[],tenants:[],pays:[]},tab='Dashboard';
+try{const s=localStorage.getItem('rem');if(s)db=JSON.parse(s)}catch(e){}
+const save=()=>{try{localStorage.setItem('rem',JSON.stringify(db))}catch(e){}};
+const $=id=>document.getElementById(id);
+const uid=()=>Date.now()+Math.floor(Math.random()*1000);
+const fmt=n=>Number(n||0).toLocaleString('en-IN');
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const today=()=>new Date().toISOString().slice(0,10);
+const inYear=()=>new Date(Date.now()+365*864e5).toISOString().slice(0,10);
+const occ=id=>db.tenants.some(t=>t.active&&t.pid===id);
+const pn=id=>(db.props.find(p=>p.id===id)||{}).name||'—';
+const stat=(l,v)=>`<div class="stat"><small>${l}</small><b>${v}</b></div>`;
+const tbl=(h,rows)=>rows.length?`<div class="w"><table><tr>${h.map(x=>`<th>${x}</th>`).join('')}</tr>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</table></div>`:'<p class="mut">Nothing here yet.</p>';
+
+const ico=t=>({Apartment:'<rect x="30" y="10" width="60" height="80" fill="#2f6fed"/><rect x="30" y="10" width="60" height="80" fill="url(#w)"/>',House:'<polygon points="15,48 60,12 105,48" fill="#e4572e"/><rect x="25" y="48" width="70" height="42" fill="#fff" stroke="#c9d3e0"/><rect x="52" y="62" width="16" height="28" fill="#0e7c86"/>',Commercial:'<rect x="15" y="34" width="90" height="56" fill="#f2a33a"/><rect x="15" y="26" width="90" height="12" fill="#e4572e"/><rect x="28" y="52" width="30" height="38" fill="#fff"/><rect x="68" y="52" width="26" height="22" fill="#fff"/>',Land:'<circle cx="40" cy="55" r="22" fill="#2bb673"/><circle cx="78" cy="62" r="18" fill="#2bb673"/><rect x="37" y="70" width="6" height="20" fill="#7a4b27"/><rect x="75" y="72" width="5" height="18" fill="#7a4b27"/>'}[t]||'');
+function dash(){
+ const n=db.props.length,o=db.props.filter(p=>occ(p.id)).length;
+ const exp=db.props.filter(p=>occ(p.id)).reduce((s,p)=>s+p.rent,0);
+ const m=today().slice(0,7),col=db.pays.filter(p=>p.month===m).reduce((s,p)=>s+p.amt,0);
+ const lim=new Date(Date.now()+60*864e5).toISOString().slice(0,10);
+ const ex=db.tenants.filter(t=>t.active&&t.end<=lim).sort((a,b)=>a.end.localeCompare(b.end));
+ const by={};db.pays.forEach(p=>by[p.month]=(by[p.month]||0)+p.amt);
+ const ms=Object.keys(by).sort(),mx=Math.max(1,...ms.map(k=>by[k]));
+ return `<div class="grid">${stat('Properties',n)}${stat('Occupancy',n?Math.round(o/n*100)+'%':'0%')}${stat('Expected rent / month',fmt(exp))}${stat('Collected this month',fmt(col))}</div>
+ <h2>Leases ending in 60 days</h2>${tbl(['Tenant','Property','Lease end'],ex.map(t=>[esc(t.name),esc(pn(t.pid)),t.end]))}
+ <h2>Rent collected by month</h2>${ms.length?ms.map(k=>`<div class="bar"><span>${k}</span><i style="width:${by[k]/mx*70}%"></i><b>${fmt(by[k])}</b></div>`).join(''):'<p class="mut">No payments yet.</p>'}`;
+}
+function propsV(){
+ return `<form class="f" onsubmit="addProp(event)"><input name="pname" placeholder="Name" required><input name="paddr" placeholder="Address"><select name="ptype"><option>Apartment</option><option>House</option><option>Commercial</option><option>Land</option></select><input name="prent" type="number" min="0" placeholder="Monthly rent" required><button>Add property</button></form>
+ ${db.props.length?`<div class="cards">${db.props.map(p=>`<div class="pc"><div class="im"><svg viewBox="0 0 120 93">${ico(p.type)}<rect y="90" width="120" height="3" fill="#7a8ca8"/></svg></div><div class="bd"><h3>${esc(p.name)}</h3><div class="mut">${esc(p.addr)||p.type}</div><p style="margin:8px 0">₹ ${fmt(p.rent)} / month</p><span class="tag t-${p.type}">${p.type}</span> ${occ(p.id)?'<span class="tag ok">Occupied</span>':'<span class="tag vac">Vacant</span>'} <button class="x" onclick="delProp(${p.id})">Delete</button></div></div>`).join('')}</div>`:'<p class="mut">Add your first property — every great portfolio starts with one.</p>'}`;
+}
+function tenV(){
+ const vac=db.props.filter(p=>!occ(p.id));
+ const form=vac.length?`<form class="f" onsubmit="addTen(event)"><input name="tname" placeholder="Tenant name" required><input name="tphone" placeholder="Phone"><select name="tprop">${vac.map(p=>`<option value="${p.id}">${esc(p.name)}</option>`).join('')}</select><input name="tstart" type="date" value="${today()}" title="Lease start"><input name="tend" type="date" value="${inYear()}" title="Lease end"><button>Add tenant</button></form>`:'<p class="mut">No vacant property. Add a property (or end a lease) first.</p>';
+ const act=db.tenants.filter(t=>t.active);
+ return form+tbl(['Name','Phone','Property','Lease start','Lease end',''],act.map(t=>[esc(t.name),esc(t.phone),esc(pn(t.pid)),t.start,t.end,`<button class="x" onclick="endLease(${t.id})">End lease</button>`]));
+}
+function payV(){
+ const act=db.tenants.filter(t=>t.active);
+ const rent=id=>(db.props.find(p=>p.id===id)||{}).rent||0;
+ const form=act.length?`<form class="f" onsubmit="addPay(event)"><select id="ptn" name="ptn" onchange="fillAmt()">${act.map(t=>`<option value="${t.id}">${esc(t.name)}</option>`).join('')}</select><input id="pamt" name="pamt" type="number" min="0" value="${rent(act[0].pid)}" required><input name="pdate" type="date" value="${today()}"><button>Record payment</button></form>`:'<p class="mut">Add a tenant first.</p>';
+ const tn=id=>(db.tenants.find(t=>t.id===id)||{}).name||'—';
+ return form+tbl(['Tenant','Amount','Paid on','Month',''],[...db.pays].sort((a,b)=>b.date.localeCompare(a.date)).map(p=>[esc(tn(p.tid)),fmt(p.amt),p.date,p.month,`<button class="x" onclick="delPay(${p.id})">Delete</button>`]));
+}
+function fillAmt(){const t=db.tenants.find(x=>x.id==$('ptn').value),p=t&&db.props.find(x=>x.id===t.pid);if(p)$('pamt').value=p.rent}
+function addProp(e){e.preventDefault();const f=e.target.elements;db.props.push({id:uid(),name:f.pname.value.trim(),addr:f.paddr.value.trim(),type:f.ptype.value,rent:+f.prent.value||0});save();render()}
+function delProp(id){if(occ(id))return alert('This property has an active tenant. End the lease first.');db.props=db.props.filter(p=>p.id!==id);save();render()}
+function addTen(e){e.preventDefault();const f=e.target.elements;db.tenants.push({id:uid(),name:f.tname.value.trim(),phone:f.tphone.value.trim(),pid:+f.tprop.value,start:f.tstart.value,end:f.tend.value,active:true});save();render()}
+function endLease(id){const t=db.tenants.find(x=>x.id===id);if(t&&confirm('End this lease?')){t.active=false;save();render()}}
+function addPay(e){e.preventDefault();const f=e.target.elements,d=f.pdate.value||today();db.pays.push({id:uid(),tid:+f.ptn.value,amt:+f.pamt.value||0,date:d,month:d.slice(0,7)});save();render()}
+function delPay(id){db.pays=db.pays.filter(p=>p.id!==id);save();render()}
+function render(){
+ document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.t===tab));
+ $('v').innerHTML={Dashboard:dash,Properties:propsV,Tenants:tenV,Payments:payV}[tab]()+'<p class="mut" style="margin-top:28px;font-size:13px">Home is where the rent arrives on time. · Data is saved in this browser on this device.</p>';
+}
+document.querySelector('nav').addEventListener('click',e=>{const t=e.target.dataset.t;if(t){tab=t;render()}});
+render();
+</script></body></html>
