@@ -57,6 +57,7 @@ nav button:nth-child(1){--c:#2563eb}nav button:nth-child(2){--c:#ea580c}nav butt
 .t-Apartment{background:#2f6fed22;border-color:#2f6fed;color:#2f6fed}
 .t-House{background:#e4572e22;border-color:#e4572e;color:#e4572e}
 .t-Commercial{background:#9333ea22;border-color:#9333ea;color:#9333ea}
+.er{color:var(--bad)}
 .t-Land{background:#0e7c8622;border-color:#0e7c86;color:#0e7c86}
 </style></head><body>
 <section class="hero"><div class="in"><h1>🏠 Smart property management,<br>made simple.</h1><p>Properties, tenants and rent — all in one place.</p></div>
@@ -76,9 +77,25 @@ nav button:nth-child(1){--c:#2563eb}nav button:nth-child(2){--c:#ea580c}nav butt
 </nav>
 <main id="v"></main>
 <script>
-let db={props:[],tenants:[],pays:[]},tab='Dashboard';
-try{const s=localStorage.getItem('rem');if(s)db=JSON.parse(s)}catch(e){}
-const save=()=>{try{localStorage.setItem('rem',JSON.stringify(db))}catch(e){}};
+let db={props:[],tenants:[],pays:[]},tab='Dashboard',err='',loaded=false;
+const U='https://jpubyeeoyprshdznrbms.supabase.co/rest/v1/',K='sb_publishable_rvrbPAbDpTNmLUqmHyhxtA_dKJjbKYB';
+async function api(path,opt={}){
+ const r=await fetch(U+path,{...opt,headers:{apikey:K,'Content-Type':'application/json',Prefer:'return=minimal'}});
+ const t=await r.text();
+ if(!r.ok)throw new Error(t||r.status);
+ return t?JSON.parse(t):null;
+}
+async function load(){
+ try{
+  const [p,t,y]=await Promise.all([api('properties?order=id'),api('tenants?order=id'),api('payments?order=id')]);
+  db.props=p.map(x=>({id:x.id,name:x.name,addr:x.addr,type:x.type,rent:Number(x.rent)||0}));
+  db.tenants=t.map(x=>({id:x.id,name:x.name,phone:x.phone,pid:x.pid,start:x.start_date,end:x.end_date,active:x.active}));
+  db.pays=y.map(x=>({id:x.id,tid:x.tid,amt:Number(x.amt)||0,date:x.paid_on,month:x.month}));
+  err='';
+ }catch(e){err='Could not reach the database: '+e.message}
+ loaded=true;render();
+}
+async function act(fn){try{await fn();await load()}catch(e){alert('Error: '+e.message)}}
 const $=id=>document.getElementById(id);
 const uid=()=>Date.now()+Math.floor(Math.random()*1000);
 const fmt=n=>Number(n||0).toLocaleString('en-IN');
@@ -121,16 +138,16 @@ function payV(){
  return form+tbl(['Tenant','Amount','Paid on','Month',''],[...db.pays].sort((a,b)=>b.date.localeCompare(a.date)).map(p=>[esc(tn(p.tid)),fmt(p.amt),p.date,p.month,`<button class="x" onclick="delPay(${p.id})">Delete</button>`]));
 }
 function fillAmt(){const t=db.tenants.find(x=>x.id==$('ptn').value),p=t&&db.props.find(x=>x.id===t.pid);if(p)$('pamt').value=p.rent}
-function addProp(e){e.preventDefault();const f=e.target.elements;db.props.push({id:uid(),name:f.pname.value.trim(),addr:f.paddr.value.trim(),type:f.ptype.value,rent:+f.prent.value||0});save();render()}
-function delProp(id){if(occ(id))return alert('This property has an active tenant. End the lease first.');db.props=db.props.filter(p=>p.id!==id);save();render()}
-function addTen(e){e.preventDefault();const f=e.target.elements;db.tenants.push({id:uid(),name:f.tname.value.trim(),phone:f.tphone.value.trim(),pid:+f.tprop.value,start:f.tstart.value,end:f.tend.value,active:true});save();render()}
-function endLease(id){const t=db.tenants.find(x=>x.id===id);if(t&&confirm('End this lease?')){t.active=false;save();render()}}
-function addPay(e){e.preventDefault();const f=e.target.elements,d=f.pdate.value||today();db.pays.push({id:uid(),tid:+f.ptn.value,amt:+f.pamt.value||0,date:d,month:d.slice(0,7)});save();render()}
-function delPay(id){db.pays=db.pays.filter(p=>p.id!==id);save();render()}
+function addProp(e){e.preventDefault();const f=e.target.elements,b={name:f.pname.value.trim(),addr:f.paddr.value.trim(),type:f.ptype.value,rent:+f.prent.value||0};act(()=>api('properties',{method:'POST',body:JSON.stringify(b)}))}
+function delProp(id){if(occ(id))return alert('This property has an active tenant. End the lease first.');act(()=>api('properties?id=eq.'+id,{method:'DELETE'}))}
+function addTen(e){e.preventDefault();const f=e.target.elements,b={name:f.tname.value.trim(),phone:f.tphone.value.trim(),pid:+f.tprop.value,start_date:f.tstart.value,end_date:f.tend.value,active:true};act(()=>api('tenants',{method:'POST',body:JSON.stringify(b)}))}
+function endLease(id){if(confirm('End this lease?'))act(()=>api('tenants?id=eq.'+id,{method:'PATCH',body:JSON.stringify({active:false})}))}
+function addPay(e){e.preventDefault();const f=e.target.elements,d=f.pdate.value||today(),b={tid:+f.ptn.value,amt:+f.pamt.value||0,paid_on:d,month:d.slice(0,7)};act(()=>api('payments',{method:'POST',body:JSON.stringify(b)}))}
+function delPay(id){act(()=>api('payments?id=eq.'+id,{method:'DELETE'}))}
 function render(){
  document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.t===tab));
- $('v').innerHTML={Dashboard:dash,Properties:propsV,Tenants:tenV,Payments:payV}[tab]()+'<p class="mut" style="margin-top:28px;font-size:13px">Home is where the rent arrives on time. · Data is saved in this browser on this device.</p>';
+ $('v').innerHTML=(err?'<p class="er">'+esc(err)+'</p>':'')+(loaded?{Dashboard:dash,Properties:propsV,Tenants:tenV,Payments:payV}[tab]():'<p class="mut">Loading…</p>')+'<p class="mut" style="margin-top:28px;font-size:13px">Home is where the rent arrives on time. · Data is stored in an online database.</p>';
 }
 document.querySelector('nav').addEventListener('click',e=>{const t=e.target.dataset.t;if(t){tab=t;render()}});
-render();
+render();load();
 </script></body></html>
