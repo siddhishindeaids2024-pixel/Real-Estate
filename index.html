@@ -1,83 +1,108 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Real Estate Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+Devanagari:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f6f7f9;--card:#fff;--tx:#1b1f24;--mut:#667085;--ac:#2563eb;--bd:#e4e7ec;--ok:#16a34a;--bad:#dc2626;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1318;--card:#181e26;--tx:#e8ebef;--mut:#98a2b3;--ac:#60a5fa;--bd:#2a323d;--ok:#4ade80;--bad:#f87171}}
-:root[data-theme="dark"]{--bg:#0f1318;--card:#181e26;--tx:#e8ebef;--mut:#98a2b3;--ac:#60a5fa;--bd:#2a323d;--ok:#4ade80;--bad:#f87171}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
+:root{--navy:#0B1F3A;--bg:#F3F6FA;--card:#fff;--tx:#14213D;--mut:#5B6B80;--bd:#E1E7EF;--ac:#2563EB;--ok:#15803D;--bad:#B91C1C;color-scheme:light}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-header{padding:18px 16px 4px;max-width:960px;margin:auto}
-h1{font-size:20px;margin:0}h2{font-size:16px;margin:24px 0 8px}
-nav{display:flex;gap:6px;flex-wrap:wrap;max-width:960px;margin:8px auto;padding:0 16px}
-nav button{border:1px solid var(--bd);background:var(--card);color:var(--tx);padding:8px 14px;border-radius:999px;cursor:pointer;font:inherit}
-nav button.on{background:var(--ac);border-color:var(--ac);color:#fff}
-main{max-width:960px;margin:auto;padding:8px 16px 40px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
-.stat{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px}
-.stat small{color:var(--mut)}.stat b{display:block;font-size:22px}
-.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px;margin-bottom:14px}
-input,select{padding:9px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font:inherit;min-width:0}
-.f button{background:var(--ac);color:#fff;border:0;border-radius:8px;padding:9px;font:inherit;cursor:pointer}
-.w{overflow-x:auto;background:var(--card);border:1px solid var(--bd);border-radius:12px}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header.top{background:var(--navy);position:sticky;top:0;z-index:20;box-shadow:0 2px 10px rgba(0,0,0,.18)}
+.top .in{max-width:1100px;margin:auto;padding:0 20px;display:flex;align-items:center;gap:24px;min-height:60px}
+.brand{display:flex;align-items:center;gap:10px;color:#fff;font-weight:700;font-size:17px;white-space:nowrap}
+.brand svg{width:30px;height:30px}
+nav{display:flex;gap:2px;overflow-x:auto;margin-left:auto}
+nav button{background:none;border:0;color:#B8C7DC;padding:20px 14px 17px;font:inherit;font-weight:500;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap}
+nav button:hover{color:#fff}
+nav button.on{color:#fff;border-bottom-color:#F2994A}
+@media (max-width:820px){.top .in{padding:0 12px;gap:0;flex-wrap:wrap}.brand{padding:12px 0 0}nav{width:100%;margin-left:0}nav button{padding:12px 12px 10px}}
+.hero{background:linear-gradient(120deg,#0B1F3A,#12396B 55%,#0E7C86);color:#fff;overflow:hidden}
+.hero .in{max-width:1100px;margin:auto;padding:34px 20px 8px}
+.hero h1{margin:12px 0 8px;font-size:clamp(26px,4.6vw,42px);line-height:1.15;font-weight:700}
+.hero p{margin:0 0 6px;color:#C3D2E6;max-width:600px;font-size:16px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:4px 12px;border-radius:999px;font-size:13px}
+.hero>svg{display:block;width:100%;max-width:1100px;margin:0 auto;height:auto;max-height:150px}
+.ph{max-width:1100px;margin:0 auto;padding:26px 20px 0}
+.ph h2{margin:0;font-size:24px}.ph p{margin:4px 0 0;color:var(--mut)}
+main{max-width:1100px;margin:auto;padding:16px 20px 40px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:18px;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:12px}
+.stat{background:#fff;border:1px solid var(--bd);border-top:4px solid var(--c);border-radius:12px;padding:14px 16px}
+.stat small{color:var(--mut);font-size:13px}.stat b{display:block;font-size:23px;margin-top:2px;color:var(--c)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:16px;margin-top:16px}
+h3.sec{margin:0 0 10px;font-size:16px}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:12px;align-items:end}
+.f label{display:flex;flex-direction:column;gap:4px;font-size:11.5px;font-weight:600;color:var(--mut);text-transform:uppercase;letter-spacing:.04em}
+input,select{padding:10px 11px;border:1px solid #CBD5E1;border-radius:9px;background:#fff;color:var(--tx);font:inherit;font-size:15px;min-width:0;width:100%;text-transform:none;letter-spacing:0;font-weight:400}
+input:focus,select:focus{outline:2px solid #93C5FD;border-color:var(--ac)}
+.btn{background:var(--ac);color:#fff;border:1px solid var(--ac);border-radius:9px;padding:10px 16px;font:inherit;font-weight:600;cursor:pointer}
+.btn:hover{filter:brightness(1.08)}
+.btn.sec{background:#fff;color:var(--tx);border-color:#CBD5E1}
+.btn.red{background:#fff;color:var(--bad);border-color:#FCA5A5}
+.btn.sm{padding:4px 10px;font-size:13px;border-radius:7px}
+.w{overflow-x:auto}
 table{width:100%;border-collapse:collapse}
-th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--bd);white-space:nowrap}
-th{color:var(--mut);font-weight:600;font-size:13px}tr:last-child td{border-bottom:0}
-.x{background:none;border:1px solid var(--bd);color:var(--bad);border-radius:6px;padding:3px 9px;cursor:pointer;font:inherit}
-.ok{color:var(--ok)}.mut{color:var(--mut)}
-.bar{display:flex;align-items:center;gap:10px;margin:6px 0}.bar span{width:70px;color:var(--mut)}
-.bar i{display:block;height:14px;background:var(--ac);border-radius:4px;min-width:3px}
-.hero{overflow:hidden;background:linear-gradient(135deg,#0b3b8f,#0e7c86);color:#fff;padding:28px 16px 0}
-.hero .in{max-width:960px;margin:auto}
-.hero h1{font-size:clamp(24px,5vw,38px);line-height:1.15;margin:0 0 8px}
-.hero p{margin:0 0 14px;opacity:.9;max-width:520px}
-.hero svg{display:block;width:100%;height:auto;max-width:960px;margin:auto}
-.feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;max-width:960px;margin:14px auto 0;padding:0 16px}
-.feat div{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px}
-.feat b{display:block}.feat span{color:var(--mut);font-size:13px}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
-.pc{background:var(--card);border:1px solid var(--bd);border-radius:14px;overflow:hidden}
-.pc .im{height:110px;display:flex;align-items:flex-end;justify-content:center;background:linear-gradient(#bfe3ff,#e8f6ff)}
-.pc .im svg{width:120px;height:93px}
-.pc .bd{padding:12px}.pc h3{margin:0;font-size:16px}
-.tag{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;border:1px solid var(--bd)}
-body{background:linear-gradient(160deg,#eaf2ff,#f4fbf6 55%,#fff1e3) fixed}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) body{background:linear-gradient(160deg,#0d1b3a,#0f2a2e 60%,#1c1530) fixed}}
-:root[data-theme="dark"] body{background:linear-gradient(160deg,#0d1b3a,#0f2a2e 60%,#1c1530) fixed}
-nav button{border-color:var(--c);color:var(--c);font-weight:600}
-nav button.on{background:var(--c);border-color:var(--c);color:#fff}
-nav button:nth-child(1){--c:#2563eb}nav button:nth-child(2){--c:#ea580c}nav button:nth-child(3){--c:#9333ea}nav button:nth-child(4){--c:#16a34a}
-.feat div:nth-child(1),.grid .stat:nth-child(1){--c:#2563eb}.feat div:nth-child(2),.grid .stat:nth-child(2){--c:#9333ea}.feat div:nth-child(3),.grid .stat:nth-child(3){--c:#ea580c}.grid .stat:nth-child(4){--c:#16a34a}
-.feat div,.grid .stat{border-top:4px solid var(--c);background:color-mix(in srgb,var(--c) 9%,var(--card))}
-.feat b,.stat b{color:var(--c)}
-.tag.ok{background:#16a34a22;border-color:#16a34a;color:var(--ok)}
-.tag.vac{background:#f59e0b22;border-color:#f59e0b;color:#d97706}
-.t-Apartment{background:#2f6fed22;border-color:#2f6fed;color:#2f6fed}
-.t-House{background:#e4572e22;border-color:#e4572e;color:#e4572e}
-.t-Commercial{background:#9333ea22;border-color:#9333ea;color:#9333ea}
-.er{color:var(--bad)}
-.t-Land{background:#0e7c8622;border-color:#0e7c86;color:#0e7c86}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--bd);white-space:nowrap}
+th{font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.04em;background:#F8FAFC}
+tr:last-child td{border-bottom:0}
+.tag{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:600;border:1px solid}
+.tag.ok{background:#DCFCE7;color:#166534;border-color:#86EFAC}
+.tag.vac{background:#FEF3C7;color:#92400E;border-color:#FCD34D}
+.tag.no{background:#F1F5F9;color:#475569;border-color:#CBD5E1}
+.t-Apartment{background:#DBEAFE;color:#1E40AF;border-color:#93C5FD}
+.t-House{background:#FFEDD5;color:#C2410C;border-color:#FDBA74}
+.t-Commercial{background:#F3E8FF;color:#6B21A8;border-color:#D8B4FE}
+.t-Land{background:#CCFBF1;color:#115E59;border-color:#5EEAD4}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:14px}
+.pc{background:#fff;border:1px solid var(--bd);border-radius:14px;overflow:hidden;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.pc .im{height:112px;display:flex;align-items:flex-end;justify-content:center;background:linear-gradient(#C9E6FF,#EEF8FF)}
+.pc .im svg{width:122px;height:95px}
+.pc .bd{padding:14px}.pc h3{margin:0;font-size:16px}
+.mut{color:var(--mut)}
+.bar{display:flex;align-items:center;gap:10px;margin:8px 0}.bar span{width:76px;color:var(--mut);font-size:13px}
+.bar i{display:block;height:16px;background:linear-gradient(90deg,#2563EB,#0E7C86);border-radius:5px;min-width:4px}
+.empty{padding:22px;text-align:center;color:var(--mut)}
+.er{background:#FEF2F2;color:#991B1B;border:1px solid #FCA5A5;border-radius:10px;padding:10px 14px;margin-bottom:12px}
+.note{background:#EFF6FF;border:1px solid #BFDBFE;color:#1E3A8A;border-radius:10px;padding:10px 14px;font-size:13.5px;margin-bottom:12px}
+.foot{text-align:center;color:var(--mut);font-size:13px;padding:0 20px 30px;margin:0}
+#modal{display:none;position:fixed;inset:0;background:rgba(11,31,58,.68);z-index:50;overflow:auto;padding:16px}
+#modal.show{display:block}
+#modal .bar{max-width:820px;margin:0 auto 12px;display:flex;justify-content:space-between;align-items:center;color:#fff;gap:8px;flex-wrap:wrap}
+.paper{background:#fff;max-width:820px;margin:0 auto 24px;padding:48px 56px;color:#111;font-family:'Noto Serif Devanagari',Georgia,'Times New Roman',serif;line-height:1.65;font-size:16px;border-radius:4px}
+.paper h1{text-align:center;font-size:24px;letter-spacing:.06em;margin:0 0 22px;text-decoration:underline}
+.paper p{margin:0 0 12px;text-align:justify}
+.paper ol{padding-left:28px;margin:0 0 14px}.paper li{margin-bottom:8px;text-align:justify}
+.paper ol.mr{list-style-type:devanagari}
+.sig{display:grid;grid-template-columns:1fr 1fr;gap:48px 40px;margin-top:52px}
+.sig div{border-top:1px solid #111;padding-top:6px;font-size:14px}
+.paper .small{font-size:12px;color:#555;margin-top:28px;border-top:1px dashed #aaa;padding-top:8px}
+@media (max-width:640px){.paper{padding:24px 18px}}
+@media print{
+ body>*:not(#modal){display:none!important}
+ body{background:#fff}
+ #modal{position:static;display:block!important;background:none;padding:0;overflow:visible}
+ #modal .bar,.paper .small{display:none}
+ .paper{max-width:none;padding:0;margin:0;border-radius:0}
+ @page{margin:18mm}
+}
 </style></head><body>
-<section class="hero"><div class="in"><h1>🏠 Smart property management,<br>made simple.</h1><p>Properties, tenants and rent — all in one place.</p></div>
-<svg viewBox="0 0 960 140" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
-<defs><pattern id="w" width="16" height="20" patternUnits="userSpaceOnUse"><rect x="4" y="5" width="8" height="10" rx="1" fill="#ffd96b" opacity=".9"/></pattern></defs>
-<circle cx="860" cy="38" r="22" fill="#ffd96b" opacity=".9"/>
-<g fill="#fff" opacity=".25"><rect x="30" y="60" width="70" height="80"/><rect x="250" y="40" width="60" height="100"/><rect x="560" y="55" width="80" height="85"/><rect x="800" y="70" width="70" height="70"/></g>
-<g fill="#0a2a6b"><rect x="110" y="25" width="90" height="115"/><rect x="210" y="70" width="70" height="70"/><rect x="330" y="45" width="80" height="95"/><rect x="430" y="80" width="60" height="60"/><rect x="500" y="30" width="90" height="110"/></g>
-<g fill="url(#w)"><rect x="110" y="25" width="90" height="115"/><rect x="210" y="70" width="70" height="70"/><rect x="330" y="45" width="80" height="95"/><rect x="430" y="80" width="60" height="60"/><rect x="500" y="30" width="90" height="110"/></g>
-<polygon points="640,95 705,55 770,95" fill="#e4572e"/><rect x="655" y="95" width="100" height="45" fill="#fff"/><rect x="695" y="110" width="20" height="30" fill="#0e7c86"/><rect x="668" y="105" width="14" height="14" fill="#9ad1ff"/><rect x="728" y="105" width="14" height="14" fill="#9ad1ff"/>
-<g fill="#2bb673"><circle cx="85" cy="118" r="16"/><circle cx="612" cy="118" r="14"/><circle cx="800" cy="116" r="16"/><circle cx="900" cy="118" r="14"/></g>
-<rect y="136" width="960" height="4" fill="#0a2a6b"/></svg></section>
-<div class="feat"><div><b>🏢 Track every property</b><span>See what is vacant and what is earning.</span></div><div><b>👥 Know your tenants</b><span>Leases and contacts, always at hand.</span></div><div><b>💰 Never miss rent</b><span>Record payments and watch your income grow.</span></div></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><pattern id="w" width="16" height="20" patternUnits="userSpaceOnUse"><rect x="4" y="5" width="8" height="10" rx="1" fill="#ffd96b" opacity=".9"/></pattern></defs></svg>
+<header class="top"><div class="in">
+<div class="brand"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#F2994A"/><path d="M6 16 16 7l10 9" fill="none" stroke="#0B1F3A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><rect x="9.5" y="16" width="13" height="9" rx="1" fill="#0B1F3A"/><rect x="14" y="19" width="4" height="6" fill="#F2994A"/></svg>Real Estate Manager</div>
 <nav>
-<button data-t="Dashboard">Dashboard</button><button data-t="Properties">Properties</button>
-<button data-t="Tenants">Tenants</button><button data-t="Payments">Payments</button>
-</nav>
+<button data-t="Dashboard">Dashboard</button><button data-t="Properties">Properties</button><button data-t="Tenants">Tenants</button><button data-t="Agreements">Agreements</button><button data-t="Payments">Payments</button>
+</nav></div></header>
+<section class="hero" id="hero"></section>
+<div class="ph" id="ph"></div>
 <main id="v"></main>
+<p class="foot">Home is where the rent arrives on time. · Data is stored in an online database.</p>
+<div id="modal"><div class="bar"><b>Preview</b><div><button class="btn" onclick="window.print()">Print / Save as PDF</button> <button class="btn sec" onclick="closeDoc()">Close</button></div></div><div class="paper" id="paper"></div></div>
 <script>
-let db={props:[],tenants:[],pays:[]},tab='Dashboard',err='',loaded=false;
+let db={props:[],tenants:[],pays:[]},tab='Dashboard',err='',loaded=false,agT=null;
 const U='https://jpubyeeoyprshdznrbms.supabase.co/rest/v1/',K='sb_publishable_rvrbPAbDpTNmLUqmHyhxtA_dKJjbKYB';
 async function api(path,opt={}){
  const r=await fetch(U+path,{...opt,headers:{apikey:K,'Content-Type':'application/json',Prefer:'return=minimal'}});
@@ -89,7 +114,7 @@ async function load(){
  try{
   const [p,t,y]=await Promise.all([api('properties?order=id'),api('tenants?order=id'),api('payments?order=id')]);
   db.props=p.map(x=>({id:x.id,name:x.name,addr:x.addr,type:x.type,rent:Number(x.rent)||0}));
-  db.tenants=t.map(x=>({id:x.id,name:x.name,phone:x.phone,pid:x.pid,start:x.start_date,end:x.end_date,active:x.active}));
+  db.tenants=t.map(x=>({id:x.id,name:x.name,phone:x.phone,pid:x.pid,start:x.start_date,end:x.end_date,active:x.active,doc:x.doc_type,last4:x.doc_last4,dstatus:x.doc_status}));
   db.pays=y.map(x=>({id:x.id,tid:x.tid,amt:Number(x.amt)||0,date:x.paid_on,month:x.month}));
   err='';
  }catch(e){err='Could not reach the database: '+e.message}
@@ -97,57 +122,185 @@ async function load(){
 }
 async function act(fn){try{await fn();await load()}catch(e){alert('Error: '+e.message)}}
 const $=id=>document.getElementById(id);
-const uid=()=>Date.now()+Math.floor(Math.random()*1000);
 const fmt=n=>Number(n||0).toLocaleString('en-IN');
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const today=()=>new Date().toISOString().slice(0,10);
-const inYear=()=>new Date(Date.now()+365*864e5).toISOString().slice(0,10);
+const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const today=()=>iso(new Date());
+const inYear=()=>iso(new Date(Date.now()+365*864e5));
+const dmy=s=>{if(!s)return'—';const [y,m,d]=String(s).split('-');return d+'/'+m+'/'+y};
+const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const mon=s=>{const [y,m]=String(s).split('-');return MONTHS[+m-1]+' '+y};
+const LS={get(k){try{return localStorage.getItem(k)||''}catch(e){return''}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
 const occ=id=>db.tenants.some(t=>t.active&&t.pid===id);
-const pn=id=>(db.props.find(p=>p.id===id)||{}).name||'—';
-const stat=(l,v)=>`<div class="stat"><small>${l}</small><b>${v}</b></div>`;
-const tbl=(h,rows)=>rows.length?`<div class="w"><table><tr>${h.map(x=>`<th>${x}</th>`).join('')}</tr>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</table></div>`:'<p class="mut">Nothing here yet.</p>';
+const prop=id=>db.props.find(p=>p.id===id)||{};
+const pn=id=>prop(id).name||'—';
+const stat=(l,v,c)=>`<div class="stat" style="--c:${c}"><small>${l}</small><b>${v}</b></div>`;
+const tbl=(h,rows,empty)=>rows.length?`<div class="w"><table><tr>${h.map(x=>`<th>${x}</th>`).join('')}</tr>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</table></div>`:`<div class="empty">${empty||'Nothing here yet.'}</div>`;
+const kyc=t=>t.dstatus==='Verified'?'<span class="tag ok">✔ Verified</span>':t.dstatus==='Pending'?'<span class="tag vac">Pending</span> <button class="btn sm sec" onclick="verifyDoc('+t.id+')">Mark verified</button>':'<span class="tag no">Not provided</span>';
 
 const ico=t=>({Apartment:'<rect x="30" y="10" width="60" height="80" fill="#2f6fed"/><rect x="30" y="10" width="60" height="80" fill="url(#w)"/>',House:'<polygon points="15,48 60,12 105,48" fill="#e4572e"/><rect x="25" y="48" width="70" height="42" fill="#fff" stroke="#c9d3e0"/><rect x="52" y="62" width="16" height="28" fill="#0e7c86"/>',Commercial:'<rect x="15" y="34" width="90" height="56" fill="#f2a33a"/><rect x="15" y="26" width="90" height="12" fill="#e4572e"/><rect x="28" y="52" width="30" height="38" fill="#fff"/><rect x="68" y="52" width="26" height="22" fill="#fff"/>',Land:'<circle cx="40" cy="55" r="22" fill="#2bb673"/><circle cx="78" cy="62" r="18" fill="#2bb673"/><rect x="37" y="70" width="6" height="20" fill="#7a4b27"/><rect x="75" y="72" width="5" height="18" fill="#7a4b27"/>'}[t]||'');
+
+const HERO=`<div class="in"><div class="chips"><span class="chip">Properties</span><span class="chip">ID verification</span><span class="chip">Rent agreements</span><span class="chip">Rent receipts</span></div><h1>Smart property management,<br>made simple.</h1><p>Track properties, verify tenant documents, prepare rent agreements and record rent, all in one place.</p></div>
+<svg viewBox="0 0 960 140" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><circle cx="860" cy="38" r="22" fill="#ffd96b" opacity=".9"/><g fill="#fff" opacity=".22"><rect x="30" y="60" width="70" height="80"/><rect x="250" y="40" width="60" height="100"/><rect x="560" y="55" width="80" height="85"/><rect x="800" y="70" width="70" height="70"/></g><g fill="#0a2a6b"><rect x="110" y="25" width="90" height="115"/><rect x="210" y="70" width="70" height="70"/><rect x="330" y="45" width="80" height="95"/><rect x="430" y="80" width="60" height="60"/><rect x="500" y="30" width="90" height="110"/></g><g fill="url(#w)"><rect x="110" y="25" width="90" height="115"/><rect x="210" y="70" width="70" height="70"/><rect x="330" y="45" width="80" height="95"/><rect x="430" y="80" width="60" height="60"/><rect x="500" y="30" width="90" height="110"/></g><polygon points="640,95 705,55 770,95" fill="#e4572e"/><rect x="655" y="95" width="100" height="45" fill="#fff"/><rect x="695" y="110" width="20" height="30" fill="#0e7c86"/><rect x="668" y="105" width="14" height="14" fill="#9ad1ff"/><rect x="728" y="105" width="14" height="14" fill="#9ad1ff"/><g fill="#2bb673"><circle cx="85" cy="118" r="16"/><circle cx="612" cy="118" r="14"/><circle cx="800" cy="116" r="16"/><circle cx="900" cy="118" r="14"/></g><rect y="136" width="960" height="4" fill="#0a2a6b"/></svg>`;
+const TITLES={Properties:['Properties','Add and manage your flats, houses, shops and land.'],Tenants:['Tenants','Tenant details, ID document verification and leases.'],Agreements:['Rent agreements','Prepare a printable rent agreement in English or Marathi.'],Payments:['Rent payments','Record rent and print a receipt for every payment.']};
+
 function dash(){
- const n=db.props.length,o=db.props.filter(p=>occ(p.id)).length;
+ const n=db.props.length,o=db.props.filter(p=>occ(p.id)).length,act=db.tenants.filter(t=>t.active);
  const exp=db.props.filter(p=>occ(p.id)).reduce((s,p)=>s+p.rent,0);
- const m=today().slice(0,7),col=db.pays.filter(p=>p.month===m).reduce((s,p)=>s+p.amt,0);
- const lim=new Date(Date.now()+60*864e5).toISOString().slice(0,10);
- const ex=db.tenants.filter(t=>t.active&&t.end<=lim).sort((a,b)=>a.end.localeCompare(b.end));
+ const m=today().slice(0,7),mp=db.pays.filter(p=>p.month===m),col=mp.reduce((s,p)=>s+p.amt,0);
+ const paid=new Set(mp.map(p=>p.tid)),due=act.filter(t=>!paid.has(t.id));
+ const ver=act.filter(t=>t.dstatus==='Verified').length;
+ const lim=iso(new Date(Date.now()+60*864e5));
+ const ex=act.filter(t=>t.end&&t.end<=lim).sort((a,b)=>a.end.localeCompare(b.end));
  const by={};db.pays.forEach(p=>by[p.month]=(by[p.month]||0)+p.amt);
- const ms=Object.keys(by).sort(),mx=Math.max(1,...ms.map(k=>by[k]));
- return `<div class="grid">${stat('Properties',n)}${stat('Occupancy',n?Math.round(o/n*100)+'%':'0%')}${stat('Expected rent / month',fmt(exp))}${stat('Collected this month',fmt(col))}</div>
- <h2>Leases ending in 60 days</h2>${tbl(['Tenant','Property','Lease end'],ex.map(t=>[esc(t.name),esc(pn(t.pid)),t.end]))}
- <h2>Rent collected by month</h2>${ms.length?ms.map(k=>`<div class="bar"><span>${k}</span><i style="width:${by[k]/mx*70}%"></i><b>${fmt(by[k])}</b></div>`).join(''):'<p class="mut">No payments yet.</p>'}`;
+ const ms=Object.keys(by).sort().slice(-6),mx=Math.max(1,...ms.map(k=>by[k]));
+ return `<div class="stats">${stat('Properties',n,'#2563EB')}${stat('Occupancy',n?Math.round(o/n*100)+'%':'0%','#9333EA')}${stat('Expected rent / month','₹ '+fmt(exp),'#EA580C')}${stat('Collected this month','₹ '+fmt(col),'#16A34A')}${stat('Rent pending',due.length+(due.length===1?' tenant':' tenants'),'#B91C1C')}${stat('ID verified',ver+' / '+act.length,'#0E7C86')}</div>
+ <div class="cols">
+ <div class="card"><h3 class="sec">Rent not yet received this month</h3>${tbl(['Tenant','Property','Rent'],due.map(t=>[esc(t.name),esc(pn(t.pid)),'₹ '+fmt(prop(t.pid).rent)]),'All rent for this month is received.')}</div>
+ <div class="card"><h3 class="sec">Leases ending in 60 days</h3>${tbl(['Tenant','Property','Lease end'],ex.map(t=>[esc(t.name),esc(pn(t.pid)),dmy(t.end)+(t.end<today()?' <span class="tag vac">Expired</span>':'')]),'No lease is ending soon.')}</div>
+ </div>
+ <div class="card" style="margin-top:16px"><h3 class="sec">Rent collected by month</h3>${ms.length?ms.map(k=>`<div class="bar"><span>${mon(k)}</span><i style="width:${Math.max(1,by[k]/mx*70)}%"></i><b>₹ ${fmt(by[k])}</b></div>`).join(''):'<div class="empty">No payments recorded yet.</div>'}</div>`;
 }
 function propsV(){
- return `<form class="f" onsubmit="addProp(event)"><input name="pname" placeholder="Name" required><input name="paddr" placeholder="Address"><select name="ptype"><option>Apartment</option><option>House</option><option>Commercial</option><option>Land</option></select><input name="prent" type="number" min="0" placeholder="Monthly rent" required><button>Add property</button></form>
- ${db.props.length?`<div class="cards">${db.props.map(p=>`<div class="pc"><div class="im"><svg viewBox="0 0 120 93">${ico(p.type)}<rect y="90" width="120" height="3" fill="#7a8ca8"/></svg></div><div class="bd"><h3>${esc(p.name)}</h3><div class="mut">${esc(p.addr)||p.type}</div><p style="margin:8px 0">₹ ${fmt(p.rent)} / month</p><span class="tag t-${p.type}">${p.type}</span> ${occ(p.id)?'<span class="tag ok">Occupied</span>':'<span class="tag vac">Vacant</span>'} <button class="x" onclick="delProp(${p.id})">Delete</button></div></div>`).join('')}</div>`:'<p class="mut">Add your first property — every great portfolio starts with one.</p>'}`;
+ const form=`<form class="card f" onsubmit="addProp(event)">
+ <label>Name<input name="pname" placeholder="e.g. Flat 101" required></label>
+ <label>Address<input name="paddr" placeholder="Area, city"></label>
+ <label>Type<select name="ptype"><option>Apartment</option><option>House</option><option>Commercial</option><option>Land</option></select></label>
+ <label>Monthly rent (₹)<input name="prent" type="number" min="0" required></label>
+ <div><button class="btn" style="width:100%">Add property</button></div></form>`;
+ const list=db.props.length?`<div class="cards">${db.props.map(p=>{const t=db.tenants.find(x=>x.active&&x.pid===p.id);return `<div class="pc"><div class="im"><svg viewBox="0 0 120 95">${ico(p.type)}<rect y="92" width="120" height="3" fill="#7a8ca8"/></svg></div><div class="bd"><h3>${esc(p.name)}</h3><div class="mut">${esc(p.addr)||p.type}</div><p style="margin:8px 0;font-weight:600">₹ ${fmt(p.rent)} / month</p><div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"><span class="tag t-${p.type}">${p.type}</span>${t?'<span class="tag ok">Occupied</span>':'<span class="tag vac">Vacant</span>'}</div>${t?`<div class="mut" style="margin-top:8px;font-size:13px">Tenant: ${esc(t.name)}</div>`:''}<div style="margin-top:10px"><button class="btn sm red" onclick="delProp(${p.id})">Delete</button></div></div></div>`}).join('')}</div>`:'<div class="card empty">Add your first property above. Every great portfolio starts with one.</div>';
+ return form+'<div style="height:16px"></div>'+list;
 }
 function tenV(){
  const vac=db.props.filter(p=>!occ(p.id));
- const form=vac.length?`<form class="f" onsubmit="addTen(event)"><input name="tname" placeholder="Tenant name" required><input name="tphone" placeholder="Phone"><select name="tprop">${vac.map(p=>`<option value="${p.id}">${esc(p.name)}</option>`).join('')}</select><input name="tstart" type="date" value="${today()}" title="Lease start"><input name="tend" type="date" value="${inYear()}" title="Lease end"><button>Add tenant</button></form>`:'<p class="mut">No vacant property. Add a property (or end a lease) first.</p>';
+ const note='<div class="note"><b>Privacy:</b> type only the <b>last 4 digits</b> of the ID. Never type the full Aadhaar number. Mark an ID as verified only after you have seen the <b>original</b> document.</div>';
+ const form=vac.length?`<form class="card f" onsubmit="addTen(event)">
+ <label>Tenant name<input name="tname" required></label>
+ <label>Phone<input name="tphone" inputmode="tel"></label>
+ <label>ID document<select name="tdoc"><option>Aadhaar</option><option>PAN</option><option>Driving Licence</option><option>Voter ID</option><option>Passport</option></select></label>
+ <label>ID last 4 digits<input name="tlast4" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" placeholder="1234" title="Type only the last 4 digits"></label>
+ <label>Property<select name="tprop">${vac.map(p=>`<option value="${p.id}">${esc(p.name)}</option>`).join('')}</select></label>
+ <label>Lease start<input name="tstart" type="date" value="${today()}"></label>
+ <label>Lease end<input name="tend" type="date" value="${inYear()}"></label>
+ <div><button class="btn" style="width:100%">Add tenant</button></div></form>`:'<div class="card empty">No vacant property. Add a property (or end a lease) first.</div>';
  const act=db.tenants.filter(t=>t.active);
- return form+tbl(['Name','Phone','Property','Lease start','Lease end',''],act.map(t=>[esc(t.name),esc(t.phone),esc(pn(t.pid)),t.start,t.end,`<button class="x" onclick="endLease(${t.id})">End lease</button>`]));
+ return note+form+'<div class="card" style="margin-top:16px;padding:6px 8px">'+tbl(['Name','Phone','ID document','Verification','Property','Lease start','Lease end',''],act.map(t=>[esc(t.name),esc(t.phone)||'—',t.last4?esc(t.doc)+' •••• '+esc(t.last4):'—',kyc(t),esc(pn(t.pid)),dmy(t.start),dmy(t.end),`<button class="btn sm sec" onclick="goAg(${t.id})">Agreement</button> <button class="btn sm red" onclick="endLease(${t.id})">End lease</button>`]),'No active tenants yet.')+'</div>';
+}
+function agV(){
+ const act=db.tenants.filter(t=>t.active);
+ if(!act.length)return '<div class="card empty">Add a tenant first. The agreement is prepared from the tenant and property details.</div>';
+ const t=act.find(x=>x.id===agT)||act[0],p=prop(t.pid);
+ return `<div class="note">This makes a <b>draft</b> rent agreement. For legal use, print it on stamp paper of the value required in your state and register it as the law requires.</div>
+ <form class="card f" onsubmit="genAg(event)">
+ <label>Tenant<select name="gt" onchange="agPick(this.value)">${act.map(x=>`<option value="${x.id}"${x.id===t.id?' selected':''}>${esc(x.name)} — ${esc(pn(x.pid))}</option>`).join('')}</select></label>
+ <label>Owner name<input name="gown" value="${esc(LS.get('own'))}" required></label>
+ <label>Owner address<input name="gadr" value="${esc(LS.get('oadr'))}"></label>
+ <label>City<input name="gcity" value="${esc(LS.get('city'))}" required></label>
+ <label>Agreement date<input name="gdate" type="date" value="${today()}"></label>
+ <label>Lease start<input name="gs" type="date" value="${t.start||today()}"></label>
+ <label>Lease end<input name="ge" type="date" value="${t.end||inYear()}"></label>
+ <label>Monthly rent (₹)<input name="grent" type="number" min="0" value="${p.rent||0}"></label>
+ <label>Security deposit (₹)<input name="gdep" type="number" min="0" value="${(p.rent||0)*2}"></label>
+ <label>Rent due by day<input name="gdue" type="number" min="1" max="28" value="5"></label>
+ <label>Notice period<select name="gnot"><option value="1">1 month</option><option value="2">2 months</option><option value="3">3 months</option></select></label>
+ <label>Language<select name="glang"><option value="en">English</option><option value="mr">मराठी</option></select></label>
+ <div><button class="btn" style="width:100%">Generate agreement</button></div></form>`;
 }
 function payV(){
  const act=db.tenants.filter(t=>t.active);
- const rent=id=>(db.props.find(p=>p.id===id)||{}).rent||0;
- const form=act.length?`<form class="f" onsubmit="addPay(event)"><select id="ptn" name="ptn" onchange="fillAmt()">${act.map(t=>`<option value="${t.id}">${esc(t.name)}</option>`).join('')}</select><input id="pamt" name="pamt" type="number" min="0" value="${rent(act[0].pid)}" required><input name="pdate" type="date" value="${today()}"><button>Record payment</button></form>`:'<p class="mut">Add a tenant first.</p>';
- const tn=id=>(db.tenants.find(t=>t.id===id)||{}).name||'—';
- return form+tbl(['Tenant','Amount','Paid on','Month',''],[...db.pays].sort((a,b)=>b.date.localeCompare(a.date)).map(p=>[esc(tn(p.tid)),fmt(p.amt),p.date,p.month,`<button class="x" onclick="delPay(${p.id})">Delete</button>`]));
+ const form=act.length?`<form class="card f" onsubmit="addPay(event)">
+ <label>Tenant<select id="ptn" name="ptn" onchange="fillAmt()">${act.map(t=>`<option value="${t.id}">${esc(t.name)} — ${esc(pn(t.pid))}</option>`).join('')}</select></label>
+ <label>Amount (₹)<input id="pamt" name="pamt" type="number" min="0" value="${prop(act[0].pid).rent||0}" required></label>
+ <label>Paid on<input name="pdate" type="date" value="${today()}"></label>
+ <div><button class="btn" style="width:100%">Record payment</button></div></form>`:'<div class="card empty">Add a tenant first.</div>';
+ const tn=id=>(db.tenants.find(t=>t.id===id)||{});
+ const rows=[...db.pays].sort((a,b)=>b.date.localeCompare(a.date)).map(p=>[esc(tn(p.tid).name||'—'),esc(pn(tn(p.tid).pid)),'₹ '+fmt(p.amt),dmy(p.date),mon(p.month),`<button class="btn sm sec" onclick="receipt(${p.id})">Receipt</button> <button class="btn sm red" onclick="delPay(${p.id})">Delete</button>`]);
+ return form+'<div class="card" style="margin-top:16px;padding:6px 8px">'+tbl(['Tenant','Property','Amount','Paid on','Month',''],rows,'No payments recorded yet.')+'</div>';
 }
-function fillAmt(){const t=db.tenants.find(x=>x.id==$('ptn').value),p=t&&db.props.find(x=>x.id===t.pid);if(p)$('pamt').value=p.rent}
+function fillAmt(){const t=db.tenants.find(x=>x.id==$('ptn').value);if(t)$('pamt').value=prop(t.pid).rent||0}
+
+/* ---------- actions ---------- */
 function addProp(e){e.preventDefault();const f=e.target.elements,b={name:f.pname.value.trim(),addr:f.paddr.value.trim(),type:f.ptype.value,rent:+f.prent.value||0};act(()=>api('properties',{method:'POST',body:JSON.stringify(b)}))}
-function delProp(id){if(occ(id))return alert('This property has an active tenant. End the lease first.');act(()=>api('properties?id=eq.'+id,{method:'DELETE'}))}
-function addTen(e){e.preventDefault();const f=e.target.elements,b={name:f.tname.value.trim(),phone:f.tphone.value.trim(),pid:+f.tprop.value,start_date:f.tstart.value,end_date:f.tend.value,active:true};act(()=>api('tenants',{method:'POST',body:JSON.stringify(b)}))}
+function delProp(id){if(occ(id))return alert('This property has an active tenant. End the lease first.');if(confirm('Delete this property?'))act(()=>api('properties?id=eq.'+id,{method:'DELETE'}))}
+function addTen(e){e.preventDefault();const f=e.target.elements,l4=f.tlast4.value.trim(),b={name:f.tname.value.trim(),phone:f.tphone.value.trim(),pid:+f.tprop.value,start_date:f.tstart.value,end_date:f.tend.value,active:true,doc_type:f.tdoc.value,doc_last4:l4,doc_status:l4?'Pending':'Not provided'};act(()=>api('tenants',{method:'POST',body:JSON.stringify(b)}))}
+function verifyDoc(id){if(confirm('Mark as verified? Do this only after you have seen the ORIGINAL document.'))act(()=>api('tenants?id=eq.'+id,{method:'PATCH',body:JSON.stringify({doc_status:'Verified'})}))}
 function endLease(id){if(confirm('End this lease?'))act(()=>api('tenants?id=eq.'+id,{method:'PATCH',body:JSON.stringify({active:false})}))}
 function addPay(e){e.preventDefault();const f=e.target.elements,d=f.pdate.value||today(),b={tid:+f.ptn.value,amt:+f.pamt.value||0,paid_on:d,month:d.slice(0,7)};act(()=>api('payments',{method:'POST',body:JSON.stringify(b)}))}
-function delPay(id){act(()=>api('payments?id=eq.'+id,{method:'DELETE'}))}
+function delPay(id){if(confirm('Delete this payment?'))act(()=>api('payments?id=eq.'+id,{method:'DELETE'}))}
+function goAg(id){agT=id;tab='Agreements';render();window.scrollTo(0,0)}
+function saveOwner(f){LS.set('own',f.gown.value);LS.set('oadr',f.gadr.value);LS.set('city',f.gcity.value)}
+function agPick(v){const f=$('v').querySelector('form');if(f)saveOwner(f.elements);agT=+v;render()}
+function genAg(e){e.preventDefault();const f=e.target.elements,t=db.tenants.find(x=>x.id===+f.gt.value);if(!t)return;saveOwner(f);
+ const d={own:f.gown.value,oadr:f.gadr.value,city:f.gcity.value,date:f.gdate.value,s:f.gs.value,e:f.ge.value,rent:+f.grent.value||0,dep:+f.gdep.value||0,due:f.gdue.value||5,notice:+f.gnot.value,t,p:prop(t.pid)};
+ openDoc(f.glang.value==='mr'?agMr(d):agEn(d));}
+function openDoc(h){$('paper').innerHTML=h;$('modal').classList.add('show');$('modal').scrollTop=0}
+function closeDoc(){$('modal').classList.remove('show')}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDoc()});
+
+/* ---------- documents ---------- */
+const bl=s=>s&&String(s).trim()?esc(s):'______________';
+function sigs(d,a,b){return `<div class="sig"><div>${a}<br><b>${bl(d.own)}</b></div><div>${b}<br><b>${esc(d.t.name)}</b></div><div>${d.w1}<br>&nbsp;</div><div>${d.w2}<br>&nbsp;</div></div>`}
+function agEn(d){const t=d.t,p=d.p,T={Apartment:'flat',House:'house',Commercial:'commercial premises',Land:'land'}[p.type]||'property';
+ const idl=t.last4?`, ID: ${esc(t.doc)} (last 4 digits ${esc(t.last4)})`:'';
+ d.w1='Witness 1';d.w2='Witness 2';
+ return `<h1>RENT AGREEMENT</h1>
+<p>This Rent Agreement is made at <b>${bl(d.city)}</b> on <b>${dmy(d.date)}</b> between:</p>
+<p><b>${bl(d.own)}</b>, residing at ${bl(d.oadr)} (hereinafter called the <b>“Owner”</b>)</p>
+<p style="text-align:center"><b>AND</b></p>
+<p><b>${esc(t.name)}</b>, Phone: ${bl(t.phone)}${idl} (hereinafter called the <b>“Tenant”</b>).</p>
+<p>The Owner is the owner of the ${T} “<b>${esc(p.name)}</b>”, situated at ${bl(p.addr)} (the “Property”). The Tenant has agreed to take the Property on rent, and both parties agree to the following terms:</p>
+<ol>
+<li><b>Term.</b> The tenancy is for the period from <b>${dmy(d.s)}</b> to <b>${dmy(d.e)}</b>.</li>
+<li><b>Rent.</b> The monthly rent is <b>₹ ${fmt(d.rent)}</b>, payable on or before day ${esc(d.due)} of every month.</li>
+<li><b>Security deposit.</b> The Tenant shall pay an interest-free security deposit of <b>₹ ${fmt(d.dep)}</b>. It will be refunded when the Tenant vacates, after deducting unpaid dues and the cost of any damage.</li>
+<li><b>Use.</b> The Property shall be used only for lawful purposes. The Tenant shall not sub-let it or let others use it without the Owner’s written consent.</li>
+<li><b>Electricity, water and other charges.</b> The Tenant shall pay the bills for electricity, water and other services used during the tenancy.</li>
+<li><b>Maintenance and repairs.</b> The Tenant shall keep the Property in good condition. Major structural repairs shall be done by the Owner.</li>
+<li><b>Notice.</b> Either party may end this agreement by giving ${d.notice} month${d.notice>1?'s':''}’ written notice to the other party.</li>
+<li><b>Inspection.</b> The Owner may inspect the Property after giving reasonable prior notice.</li>
+<li><b>Handing back.</b> When the tenancy ends, the Tenant shall vacate the Property and hand it back in good condition.</li>
+<li><b>Governing law.</b> This agreement is governed by the laws of India. Any dispute shall be subject to the courts at ${bl(d.city)}.</li>
+</ol>
+<p>Both parties have read and understood this agreement and have signed it on the date mentioned above, in the presence of the witnesses.</p>
+${sigs(d,'Owner','Tenant')}
+<p class="small">Draft template for reference only. Print it on stamp paper of the value required in your state and register it as per law. It is not legal advice.</p>`}
+function agMr(d){const t=d.t,p=d.p,T={Apartment:'फ्लॅट',House:'घर',Commercial:'व्यावसायिक गाळा',Land:'जमीन'}[p.type]||'मिळकत';
+ const idl=t.last4?`, ओळखपत्र: ${esc(t.doc)} (शेवटचे ४ अंक ${esc(t.last4)})`:'';
+ d.w1='साक्षीदार १';d.w2='साक्षीदार २';
+ return `<h1>भाडे करारनामा</h1>
+<p>हा भाडे करारनामा <b>${bl(d.city)}</b> येथे दिनांक <b>${dmy(d.date)}</b> रोजी खालील पक्षकारांमध्ये करण्यात आला आहे:</p>
+<p><b>${bl(d.own)}</b>, राहणार ${bl(d.oadr)} (यापुढे <b>“मालक”</b> असे संबोधलेले)</p>
+<p style="text-align:center"><b>आणि</b></p>
+<p><b>${esc(t.name)}</b>, फोन: ${bl(t.phone)}${idl} (यापुढे <b>“भाडेकरू”</b> असे संबोधलेले).</p>
+<p>मालक हे ${bl(p.addr)} येथील “<b>${esc(p.name)}</b>” (${T}) या मिळकतीचे मालक आहेत. भाडेकरूने ही मिळकत भाड्याने घेण्याचे मान्य केले असून दोन्ही पक्षांनी खालील अटी मान्य केल्या आहेत:</p>
+<ol class="mr">
+<li><b>कालावधी:</b> हा करार <b>${dmy(d.s)}</b> ते <b>${dmy(d.e)}</b> या कालावधीसाठी आहे.</li>
+<li><b>भाडे:</b> दरमहा भाडे <b>₹ ${fmt(d.rent)}</b> असून ते प्रत्येक महिन्याच्या ${esc(d.due)} तारखेपर्यंत द्यावे.</li>
+<li><b>अनामत रक्कम (डिपॉझिट):</b> भाडेकरूने <b>₹ ${fmt(d.dep)}</b> इतकी बिनव्याजी अनामत रक्कम द्यावी. भाडेकरू मिळकत सोडेल तेव्हा थकबाकी व नुकसानीची रक्कम वजा करून ती परत केली जाईल.</li>
+<li><b>वापर:</b> मिळकतीचा वापर फक्त कायदेशीर कामासाठी करावा. मालकाच्या लेखी परवानगीशिवाय ती इतरांना भाड्याने किंवा वापरास देऊ नये.</li>
+<li><b>वीज, पाणी व इतर शुल्के:</b> वापरानुसार येणारी वीज, पाणी व इतर बिले भाडेकरूने स्वतः भरावीत.</li>
+<li><b>देखभाल व दुरुस्ती:</b> भाडेकरूने मिळकत चांगल्या स्थितीत ठेवावी. मोठ्या (स्ट्रक्चरल) दुरुस्त्या मालकाने कराव्यात.</li>
+<li><b>नोटीस:</b> कोणत्याही पक्षाला करार संपवायचा असल्यास त्याने ${d.notice} महिन्याची लेखी आगाऊ नोटीस द्यावी.</li>
+<li><b>पाहणी:</b> योग्य पूर्वसूचना देऊन मालक मिळकतीची पाहणी करू शकतो.</li>
+<li><b>ताबा परत करणे:</b> करार संपल्यावर भाडेकरूने मिळकत रिकामी करून चांगल्या स्थितीत मालकाला ताबा द्यावा.</li>
+<li><b>कायदा व न्यायालय:</b> हा करार भारतीय कायद्यानुसार असून यातून उद्भवणारे वाद ${bl(d.city)} येथील न्यायालयाच्या कक्षेत राहतील.</li>
+</ol>
+<p>वरील अटी दोन्ही पक्षांना वाचून समजल्या व मान्य असल्याने, वर नमूद केलेल्या दिनांकास साक्षीदारांसमक्ष खाली सह्या केल्या आहेत.</p>
+${sigs(d,'मालक','भाडेकरू')}
+<p class="small">हा फक्त नमुना (ड्राफ्ट) आहे. आपल्या राज्याच्या नियमानुसार योग्य किंमतीच्या स्टॅम्प पेपरवर छापा आणि नोंदणी करा. हा कायदेशीर सल्ला नाही.</p>`}
+function receipt(id){const p=db.pays.find(x=>x.id===id);if(!p)return;const t=db.tenants.find(x=>x.id===p.tid)||{},pr=prop(t.pid),own=LS.get('own');
+ openDoc(`<h1>RENT RECEIPT</h1>
+<p>Receipt No: <b>R-${p.id}</b> &nbsp;&nbsp; Date: <b>${dmy(p.date)}</b></p>
+<p>Received with thanks from <b>${esc(t.name||'—')}</b> a sum of <b>₹ ${fmt(p.amt)}</b> towards the rent of the property <b>${esc(pr.name||'—')}</b>${pr.addr?' ('+esc(pr.addr)+')':''} for the month of <b>${mon(p.month)}</b>.</p>
+<div class="sig"><div>Received by (Owner)<br><b>${bl(own)}</b></div><div>Signature<br>&nbsp;</div></div>`)}
+
 function render(){
  document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.t===tab));
- $('v').innerHTML=(err?'<p class="er">'+esc(err)+'</p>':'')+(loaded?{Dashboard:dash,Properties:propsV,Tenants:tenV,Payments:payV}[tab]():'<p class="mut">Loading…</p>')+'<p class="mut" style="margin-top:28px;font-size:13px">Home is where the rent arrives on time. · Data is stored in an online database.</p>';
+ $('hero').innerHTML=tab==='Dashboard'?HERO:'';
+ $('ph').innerHTML=TITLES[tab]?`<h2>${TITLES[tab][0]}</h2><p>${TITLES[tab][1]}</p>`:'';
+ const views={Dashboard:dash,Properties:propsV,Tenants:tenV,Agreements:agV,Payments:payV};
+ $('v').innerHTML=(err?'<div class="er">'+esc(err)+'</div>':'')+(loaded?views[tab]():'<div class="card empty">Loading…</div>');
 }
-document.querySelector('nav').addEventListener('click',e=>{const t=e.target.dataset.t;if(t){tab=t;render()}});
+document.querySelector('nav').addEventListener('click',e=>{const t=e.target.dataset.t;if(t){tab=t;render();window.scrollTo(0,0)}});
 render();load();
 </script></body></html>
